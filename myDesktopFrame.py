@@ -35,7 +35,9 @@ class myDesktopFrame(Frame):
 
         self.fileManegerButton.place(x=50,y=50)
         self.notepadButton.place(x=50,y=100)
-        
+        self.paintButton.place(x=50,y=150)
+        self.internetButton.place(x=50,y=200)
+        self.settingsButton.place(x=50,y=250)
 
         
 
