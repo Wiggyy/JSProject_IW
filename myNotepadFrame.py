@@ -10,9 +10,15 @@ class myNotepadFrame(Frame):
     
     
     """
-    def __init__(self,parent):
+    def __init__(self,desktop,size):
+        x,y = size
+        
+        parent = Frame(desktop, bg="white",width=x,height=y)
+        parent.place(x=0,y=0)
+        parent.pack_propagate(False)
+
         super().__init__(parent)
-        self.parent=parent
+        
         self.buttonFrame = Frame(master=self)
         self.loadButton = Button(master=self.buttonFrame,text="Load",command=self.doLoadButtonAction)
         self.saveButton = Button(master=self.buttonFrame,text="Save",command=self.doSaveButtonAction)

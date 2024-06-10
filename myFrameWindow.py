@@ -4,7 +4,6 @@ from tkinter import *
 class topBar(Frame):
     def __init__(self,parent,label):
        
-
         self.parent=parent
         
         self.topbar = Frame(master=self.parent, bg="PaleTurquoise",height=20)
