@@ -1,4 +1,5 @@
 from tkinter import *
+from os import *
 
 class myFileManagerFrame(Frame):
     """
@@ -6,14 +7,14 @@ class myFileManagerFrame(Frame):
     It consists of:
     - location - textfield
     - list of objects (folders/files)
-    - 
+    - topbuttons
     
     """
     def __init__(self,desktop,size):
         x,y = size
         
         parent = Frame(desktop, bg="white",width=x,height=y)
-        parent.place(x=0,y=0)
+        parent.place(x=200,y=200)
         parent.pack_propagate(False)
 
         super().__init__(parent)
@@ -58,6 +59,9 @@ class myFileManagerFrame(Frame):
 
     def doAddFolderButtonAction(self):
         print("Adding Folder")
+
+    def pupulate(self):
+        pass
 
 
         

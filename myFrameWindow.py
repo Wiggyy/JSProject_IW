@@ -1,8 +1,8 @@
 from tkinter import *
-
+from myToolBarFrame import myToolBarFrame
 
 class topBar(Frame):
-    def __init__(self,parent,label):
+    def __init__(self,parent,label,toolbar):
        
         self.parent=parent
         
@@ -25,8 +25,11 @@ class topBar(Frame):
         self.minButton= Button(master=self.topbar, text="-",command=self.minimize,width=2,)
         self.minButton.pack(side="right",fill="y")
 
-        self.startX=0
-        self.startY=0
+        self.startX=200
+        self.startY=200
+
+        self.toolbar= toolbar
+        self.unminibutton=None
 
     def start_drag(self, event):
         self.startX = event.x_root - self.parent.winfo_x()
@@ -49,6 +52,8 @@ class topBar(Frame):
         self.parent.lift()
 
     def close(self):
+        self.toolbar.removeUnMini(self.unminibutton)
+        self.unminibutton.destroy()
         self.parent.place_forget()
         self.parent.destroy()
 
@@ -60,18 +65,30 @@ class topBar(Frame):
         self.parent.place(x=self.startX, y=self.startY)
         self.parent.lift()
 
+    def addUnMinButt(self,button):
+        self.unminibutton=button
+
+
 class myFrameWindow():
-    def __init__(self, content,label) -> None:
+    def __init__(self, content,label,toolbar,location) -> None:
         
         self.parent = content.master
+        self.toolbar = toolbar
 
-        self.topbar= topBar(self.parent,label=label)
+        
 
+        self.topbar= topBar(self.parent,label,self.toolbar)
+
+        self.unminiButt=Button(master=self.toolbar.barFrame, text=label,command=self.topbar.unminimize,width=2,)
+        self.toolbar.addUnMini(self.unminiButt)
+
+        self.topbar.addUnMinButt(button=self.unminiButt)
+
+        self.location = location
         self.content = content
         self.content.pack(side="bottom",fill="both",expand="true")
 
-        self.unminiButt=Button(master=self.parent.master, text="-",command=self.topbar.unminimize,width=2,)
-        self.unminiButt.pack(side="right",fill="y")
+        
         
 
         
