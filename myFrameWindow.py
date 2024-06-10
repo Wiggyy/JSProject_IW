@@ -3,6 +3,7 @@ from tkinter import *
 
 class topBar(Frame):
     def __init__(self,parent,label):
+       
 
         self.parent=parent
         
@@ -62,6 +63,7 @@ class topBar(Frame):
 
 class myFrameWindow():
     def __init__(self, content,label) -> None:
+        
         self.parent = content.master
 
         self.topbar= topBar(self.parent,label=label)
