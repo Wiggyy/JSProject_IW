@@ -4,6 +4,8 @@ from myFrameWindow  import myFrameWindow
 from myNotepadFrame  import myNotepadFrame
 from myFileManagerFrame import myFileManagerFrame
 from myToolBarFrame import myToolBarFrame
+from myPaintFrame import myPaintFrame
+from myInternetFrame import myInternetFrame
 
 
 class myDesktopFrame(Frame):
@@ -47,10 +49,10 @@ class myDesktopFrame(Frame):
         self.openApps.append(myFrameWindow(myNotepadFrame(self.desktop, (600,400)),"Notepad",self.toolbar,""))
 
     def doPaintAction(self):
-        self.openApps.append(myFrameWindow(myFileManagerFrame(self.desktop, (600,400)),"Paint",self.toolbar,""))
+        self.openApps.append(myFrameWindow(myPaintFrame(self.desktop, (600,400)),"Paint",self.toolbar,""))
 
     def doInternetAction(self):
-        self.openApps.append(myFrameWindow(myFileManagerFrame(self.desktop, (600,400)),"Internet",self.toolbar,""))
+        self.openApps.append(myFrameWindow(myInternetFrame(self.desktop, (600,400)),"Internet",self.toolbar,""))
 
     def addToolBar(self, toolbar):
         self.toolbar = toolbar

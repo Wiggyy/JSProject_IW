@@ -13,7 +13,7 @@ desktop = myDesktopFrame(win,openApps)
 toolBar = myToolBarFrame(desktop)
 desktop.addToolBar(toolBar)
 
-window2=myFrameWindow(myFileManagerFrame(desktop.desktop, (600,400)),"Example",toolBar,"")
+#window2=myFrameWindow(myFileManagerFrame(desktop.desktop, (600,400)),"Example",toolBar,"")
 
 win.geometry("900x600")
 win.title("Desktop")

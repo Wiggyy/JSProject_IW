@@ -1,5 +1,6 @@
 from tkinter import *
 
+
 class myNotepadFrame(Frame):
     """
     This is one of the "contents" for myFrameWindow
@@ -10,7 +11,7 @@ class myNotepadFrame(Frame):
     
     
     """
-    def __init__(self,desktop,size):
+    def __init__(self,desktop,size,file=None):
         x,y = size
         
         parent = Frame(desktop, bg="white",width=x,height=y)
@@ -23,8 +24,7 @@ class myNotepadFrame(Frame):
         self.loadButton = Button(master=self.buttonFrame,text="Load",command=self.doLoadButtonAction)
         self.saveButton = Button(master=self.buttonFrame,text="Save",command=self.doSaveButtonAction)
         self.clearButton = Button(master=self.buttonFrame,text="Clear",command=self.doClearButtonAction)
-        self.renameButton =  Button(master=self.buttonFrame,text="Rename",command=self.doRenameButtonAction)
-        self.formatButton =  Button(master=self.buttonFrame,text="Format",command=self.doFormatButtonAction)
+       # self.renameButton =  Button(master=self.buttonFrame,text="Rename",command=self.doRenameButtonAction)
         self.mainText = Text(master=self)
         self.mainTxtScroll = Scrollbar(master=self.mainText,command=self.mainText.yview)
         self.mainText['yscrollcommand'] = self.mainTxtScroll.set
@@ -35,23 +35,83 @@ class myNotepadFrame(Frame):
         self.mainTxtScroll.pack(side='right',fill=Y)
         self.loadButton.pack(side="left")
         self.saveButton.pack(side="left")
-        self.renameButton.pack(side="left")
-        self.formatButton.pack(side="left")
+        #self.renameButton.pack(side="left")
         self.clearButton.pack(side="left")
+
+        if file:
+            self.loadFromFile(file)
+
+        self.popupFrame=None
+
 
         
     def doLoadButtonAction(self):
-        print("Loading")
+
+        self.showPopup(action='load')
 
     def doSaveButtonAction(self):
-        print("Saving")
+        self.showPopup(action='save')
 
     def doClearButtonAction(self):
-        print("Clearing")
+        self.mainText.delete('1.0', 'end')
 
-    def doRenameButtonAction(self):
-        print("Renaming")
 
-    def doFormatButtonAction(self):
-        print("Formatting")
+    def loadFromFile(self, file):
+        try:
+            with open(file, 'r') as f:
+                content = f.read()
+                self.mainText.delete('1.0', 'end')  # Clear previous content
+                self.mainText.insert('1.0', content)  # Insert new content
+        except FileNotFoundError:
+            print("File not found")
+        except Exception as e:
+            print("Error:", e)
+
+    def saveToFile(self, file):
+        try:
+            with open(file, 'w') as f:
+
+                f.write(self.mainText.get('1.0', 'end'))
+            
+        except FileNotFoundError:
+            print("File not found")
+        except Exception as e:
+            print("Error:", e)
+
+    def showPopup(self, item=None, action='load'):
+        if self.popupFrame:  # Destroy any existing popup frame
+            self.popupFrame.destroy()
+        
+        self.popupFrame = Frame(self, bg="lightgrey", padx=10, pady=10)
+        self.popupFrame.place(relx=0.5, rely=0.5, anchor=CENTER)
+
+        label = Label(self.popupFrame, text="Path:")
+        label.pack(side=LEFT, padx=5, pady=5)
+
+        pathEntry = Entry(self.popupFrame)
+        pathEntry.pack(side=LEFT, padx=5, pady=5)
+
+        def confirm():
+            path = pathEntry.get().strip()
+            if not path:
+                print("No name provided.")
+                return
+            if action == 'load':
+                self.loadFromFile(path)
+            elif action == 'save':
+                self.saveToFile(path)
+            self.popupFrame.destroy()
+            self.popupFrame = None
+
+        def cancel():
+            self.popupFrame.destroy()
+            self.popupFrame = None
+
+        confirm_button = Button(self.popupFrame, text="Load" if action == 'load' else "Save", command=confirm)
+        confirm_button.pack(side=LEFT, padx=5, pady=5)
+
+        cancel_button = Button(self.popupFrame, text="Cancel", command=cancel)
+        cancel_button.pack(side=LEFT, padx=5, pady=5)
+        
+
         

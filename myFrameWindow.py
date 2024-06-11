@@ -79,7 +79,7 @@ class myFrameWindow():
 
         self.topbar= topBar(self.parent,label,self.toolbar)
 
-        self.unminiButt=Button(master=self.toolbar.barFrame, text=label,command=self.topbar.unminimize,width=2,)
+        self.unminiButt=Button(master=self.toolbar.barFrame, text=label,command=self.topbar.unminimize,width=10)
         self.toolbar.addUnMini(self.unminiButt)
 
         self.topbar.addUnMinButt(button=self.unminiButt)
