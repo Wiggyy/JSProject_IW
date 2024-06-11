@@ -22,40 +22,13 @@ class myFileManagerFrame(Frame):
 
         super().__init__(parent)
         
-        self.buttonFrame = Frame(master=self,background="Light grey",height=25)
-        self.locationFrame = Frame(master=self,background="Light grey",height=25)
-        self.openButton = Button(master=self.buttonFrame,text="Open",command=self.doOpenButtonAction)
-        self.deleteButton = Button(master=self.buttonFrame,text="Delete",command=self.doDeleteButtonAction)
-        self.renameButton =  Button(master=self.buttonFrame,text="Rename",command=self.doRenameButtonAction)
-        self.addFolderButton =  Button(master=self.buttonFrame,text="Add Folder",command=self.doAddFolderButtonAction)
-        self.locationLabel = Label(master=self.locationFrame,text="Location: ",background="Light grey")
-        self.locationBox = Text(master=self.locationFrame,padx=20, width=50)
-        self.goLocationButton =  Button(master=self.locationFrame,text="Go",command=self.doGoLocationButtonAction)
+        self.draw_widgets()
 
-        self.mainListBox = Listbox(master=self)
-        self.mainTxtScroll = Scrollbar(master=self.mainListBox,command=self.mainListBox.yview)
-        self.mainListBox['yscrollcommand'] = self.mainTxtScroll.set
+        self.currentPath = "folderManager"
+        if not exists(self.currentPath):
+            mkdir(self.currentPath)
 
-
-        self.buttonFrame.pack(side='top', fill="x",expand=False)
-        self.locationFrame.pack(side='top', fill="x",expand=False)
-        self.locationFrame.pack_propagate(False)
-        self.buttonFrame.pack_propagate(False)
-        self.mainListBox.pack(side='bottom',fill="both",expand=True)
-        self.mainTxtScroll.pack(side='right',fill=Y)
-        self.openButton.pack(side="left")
-        self.deleteButton.pack(side="left")
-        self.renameButton.pack(side="left")
-        self.addFolderButton.pack(side="left")
-        self.locationLabel.pack(side="left",padx=10)
-        self.locationBox.pack(side='left',padx=10)
-        self.goLocationButton.pack(side='left',padx=10)
-
-        self.current_path = "folderManager"
-        if not exists(self.current_path):
-            mkdir(self.current_path)
-
-        self.locationBox.insert(END, self.current_path)
+        self.locationBox.insert(END, self.currentPath)
         self.popupFrame = None
         self.confirmationPopupFrame = None
         self.populate()
@@ -83,7 +56,7 @@ class myFileManagerFrame(Frame):
         label.pack(side=TOP, padx=5, pady=5)
 
         def confirm():
-            path = join(self.current_path, item)
+            path = join(self.currentPath, item)
             try:
                 if isdir(path):
                     shutil.rmtree(path)
@@ -112,11 +85,11 @@ class myFileManagerFrame(Frame):
             print("No item selected to open.")
             return
         item = self.mainListBox.get(selected[0])
-        path = join(self.current_path, item)
+        path = join(self.currentPath, item)
         if isdir(path):
-            self.current_path = path
+            self.currentPath = path
             self.locationBox.delete(1.0, END)
-            self.locationBox.insert(END, self.current_path)
+            self.locationBox.insert(END, self.currentPath)
             self.populate()
             print(f"Opened directory {item}")
         else:
@@ -134,7 +107,7 @@ class myFileManagerFrame(Frame):
         self.showPopup(action='create')
 
     def showPopup(self, item=None, action='create'):
-        if self.popupFrame:  # Destroy any existing popup frame
+        if self.popupFrame:  
             self.popupFrame.destroy()
         
         self.popupFrame = Frame(self, bg="lightgrey", padx=10, pady=10)
@@ -152,7 +125,7 @@ class myFileManagerFrame(Frame):
                 print("No name provided.")
                 return
             if action == 'create':
-                new_folder_path = join(self.current_path, new_name)
+                new_folder_path = join(self.currentPath, new_name)
                 if exists(new_folder_path):
                     print("Folder already exists.")
                     return
@@ -163,8 +136,8 @@ class myFileManagerFrame(Frame):
                 except Exception as e:
                     print(f"Failed to add folder {new_name}: {e}")
             elif action == 'rename':
-                old_path = join(self.current_path, item)
-                new_path = join(self.current_path, new_name)
+                old_path = join(self.currentPath, item)
+                new_path = join(self.currentPath, new_name)
                 try:
                     rename(old_path, new_path)
                     self.populate()
@@ -178,34 +151,62 @@ class myFileManagerFrame(Frame):
             self.popupFrame.destroy()
             self.popupFrame = None
 
-        confirm_button = Button(self.popupFrame, text="Create" if action == 'create' else "Rename", command=confirm)
-        confirm_button.pack(side=LEFT, padx=5, pady=5)
+        confirmButton = Button(self.popupFrame, text="Create" if action == 'create' else "Rename", command=confirm)
+        confirmButton.pack(side=LEFT, padx=5, pady=5)
 
-        cancel_button = Button(self.popupFrame, text="Cancel", command=cancel)
-        cancel_button.pack(side=LEFT, padx=5, pady=5)
+        cancelButton = Button(self.popupFrame, text="Cancel", command=cancel)
+        cancelButton.pack(side=LEFT, padx=5, pady=5)
 
     def populate(self):
         try:
             self.mainListBox.delete(0, END)
-            items = listdir(self.current_path)
+            items = listdir(self.currentPath)
             for item in items:
                 self.mainListBox.insert(END, item)
             print("List populated.")
             self.locationBox.delete(1.0, END)
-            self.locationBox.insert(END, self.current_path)
+            self.locationBox.insert(END, self.currentPath)
         except Exception as e:
             print(f"Failed to populate list: {e}")
 
     def doGoLocationButtonAction(self):
-        new_path = self.locationBox.get(1.0, END).strip()
-        if not exists(new_path):
-            print(f"Path does not exist: {new_path}")
+        newPath = self.locationBox.get(1.0, END).strip()
+        if not exists(newPath):
+            print(f"Path does not exist: {newPath}")
             return
-        self.current_path = new_path
+        self.currentPath = newPath
         self.populate()
-        print(f"Changed current path to {self.current_path}")
+        print(f"Changed current path to {self.currentPath}")
 
-   
+    def draw_widgets(self):
+        self.buttonFrame = Frame(master=self,background="Light grey",height=25)
+        self.locationFrame = Frame(master=self,background="Light grey",height=25)
+        self.openButton = Button(master=self.buttonFrame,text="Open",command=self.doOpenButtonAction)
+        self.deleteButton = Button(master=self.buttonFrame,text="Delete",command=self.doDeleteButtonAction)
+        self.renameButton =  Button(master=self.buttonFrame,text="Rename",command=self.doRenameButtonAction)
+        self.addFolderButton =  Button(master=self.buttonFrame,text="Add Folder",command=self.doAddFolderButtonAction)
+        self.locationLabel = Label(master=self.locationFrame,text="Location: ",background="Light grey")
+        self.locationBox = Text(master=self.locationFrame,padx=20, width=50)
+        self.goLocationButton =  Button(master=self.locationFrame,text="Go",command=self.doGoLocationButtonAction)
+
+        self.mainListBox = Listbox(master=self)
+        self.mainTxtScroll = Scrollbar(master=self.mainListBox,command=self.mainListBox.yview)
+        self.mainListBox['yscrollcommand'] = self.mainTxtScroll.set
+
+
+        self.buttonFrame.pack(side='top', fill="x",expand=False)
+        self.locationFrame.pack(side='top', fill="x",expand=False)
+        self.locationFrame.pack_propagate(False)
+        self.buttonFrame.pack_propagate(False)
+        self.mainListBox.pack(side='bottom',fill="both",expand=True)
+        self.mainTxtScroll.pack(side='right',fill=Y)
+        self.openButton.pack(side="left")
+        self.deleteButton.pack(side="left")
+        self.renameButton.pack(side="left")
+        self.addFolderButton.pack(side="left")
+        self.locationLabel.pack(side="left",padx=10)
+        self.locationBox.pack(side='left',padx=10)
+        self.goLocationButton.pack(side='left',padx=10)
 
 
 

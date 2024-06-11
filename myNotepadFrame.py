@@ -20,24 +20,7 @@ class myNotepadFrame(Frame):
 
         super().__init__(parent)
         
-        self.buttonFrame = Frame(master=self)
-        self.loadButton = Button(master=self.buttonFrame,text="Load",command=self.doLoadButtonAction)
-        self.saveButton = Button(master=self.buttonFrame,text="Save",command=self.doSaveButtonAction)
-        self.clearButton = Button(master=self.buttonFrame,text="Clear",command=self.doClearButtonAction)
-       # self.renameButton =  Button(master=self.buttonFrame,text="Rename",command=self.doRenameButtonAction)
-        self.mainText = Text(master=self)
-        self.mainTxtScroll = Scrollbar(master=self.mainText,command=self.mainText.yview)
-        self.mainText['yscrollcommand'] = self.mainTxtScroll.set
-
-
-        self.buttonFrame.pack(side='top', fill="x",expand=False)
-        self.mainText.pack(side='bottom',fill="both",expand=True)
-        self.mainTxtScroll.pack(side='right',fill=Y)
-        self.loadButton.pack(side="left")
-        self.saveButton.pack(side="left")
-        #self.renameButton.pack(side="left")
-        self.clearButton.pack(side="left")
-
+        self.drawWidgets()
         if file:
             self.loadFromFile(file)
 
@@ -60,8 +43,8 @@ class myNotepadFrame(Frame):
         try:
             with open(file, 'r') as f:
                 content = f.read()
-                self.mainText.delete('1.0', 'end')  # Clear previous content
-                self.mainText.insert('1.0', content)  # Insert new content
+                self.mainText.delete('1.0', 'end') 
+                self.mainText.insert('1.0', content)  
         except FileNotFoundError:
             print("File not found")
         except Exception as e:
@@ -79,7 +62,7 @@ class myNotepadFrame(Frame):
             print("Error:", e)
 
     def showPopup(self, item=None, action='load'):
-        if self.popupFrame:  # Destroy any existing popup frame
+        if self.popupFrame: 
             self.popupFrame.destroy()
         
         self.popupFrame = Frame(self, bg="lightgrey", padx=10, pady=10)
@@ -112,6 +95,23 @@ class myNotepadFrame(Frame):
 
         cancel_button = Button(self.popupFrame, text="Cancel", command=cancel)
         cancel_button.pack(side=LEFT, padx=5, pady=5)
-        
+    def drawWidgets(self):
+        self.buttonFrame = Frame(master=self)
+        self.loadButton = Button(master=self.buttonFrame,text="Load",command=self.doLoadButtonAction)
+        self.saveButton = Button(master=self.buttonFrame,text="Save",command=self.doSaveButtonAction)
+        self.clearButton = Button(master=self.buttonFrame,text="Clear",command=self.doClearButtonAction)
+        self.mainText = Text(master=self)
+        self.mainTxtScroll = Scrollbar(master=self.mainText,command=self.mainText.yview)
+        self.mainText['yscrollcommand'] = self.mainTxtScroll.set
+
+
+        self.buttonFrame.pack(side='top', fill="x",expand=False)
+        self.mainText.pack(side='bottom',fill="both",expand=True)
+        self.mainTxtScroll.pack(side='right',fill=Y)
+        self.loadButton.pack(side="left")
+        self.saveButton.pack(side="left")
+
+        self.clearButton.pack(side="left")
+
 
         

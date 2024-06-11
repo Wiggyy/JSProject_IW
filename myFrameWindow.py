@@ -75,21 +75,20 @@ class myFrameWindow():
         self.parent = content.master
         self.toolbar = toolbar
 
-        
-
         self.topbar= topBar(self.parent,label,self.toolbar)
 
         self.unminiButt=Button(master=self.toolbar.barFrame, text=label,command=self.topbar.unminimize,width=10)
         self.toolbar.addUnMini(self.unminiButt)
-
         self.topbar.addUnMinButt(button=self.unminiButt)
 
         self.location = location
         self.content = content
         self.content.pack(side="bottom",fill="both",expand="true")
+    
+
 
         
-        
+
 
         
      

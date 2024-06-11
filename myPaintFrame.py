@@ -55,7 +55,6 @@ class myPaintFrame(Frame):
     def drawWidgets(self):
         self.canvas = Canvas(self, width=500, height=400, bg=self.bgColor)
         self.controls = Frame(self, padx=5, pady=5)
-       # textpw = Label(self.controls, text='Pen Width')
         self.buttonFrame = Frame(master=self)
         self.buttonFrame.pack(side='top', fill="x",expand=False)
         self.controls.pack(side="left",fill="y")
@@ -90,7 +89,7 @@ class myPaintFrame(Frame):
 
     
     def canvasToFile(self):
-        all_lines = self.canvas.find_withtag("line")  # Get all item ids tagged as "line"
+        all_lines = self.canvas.find_withtag("line") 
         allLineData =[""]
         for line_id in all_lines:
             print("deb1")
@@ -118,7 +117,7 @@ class myPaintFrame(Frame):
         try:
             with open(file, 'r') as f:
                 content = f.readlines()
-                self.canvas.delete("all")  # Clear previous content
+                self.canvas.delete("all")  
                 self.fileToCanvas(content)
         except FileNotFoundError:
             print("File not found")
@@ -138,7 +137,7 @@ class myPaintFrame(Frame):
             print("Error:", e)
 
     def showPopup(self, item=None, action='load'):
-        if self.popupFrame:  # Destroy any existing popup frame
+        if self.popupFrame:  
             self.popupFrame.destroy()
         
         self.popupFrame = Frame(self, bg="lightgrey", padx=10, pady=10)

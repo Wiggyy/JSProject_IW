@@ -9,12 +9,6 @@ from myInternetFrame import myInternetFrame
 
 
 class myDesktopFrame(Frame):
-    """
-    This is one the desktop
-    it is basically a frame with 4 buttons, where all the "windows" are displayed
-
-    """
-    
 
     def __init__(self,window, openApps):
         self.imagePath= "img/background.jpg"
@@ -28,19 +22,9 @@ class myDesktopFrame(Frame):
         self.desktop.pack_propagate(False)
 
         super().__init__(self.desktop)
-        label1 = Label( self.desktop, image = self.bgPhoto) 
-        label1.place(x = 0, y = 0) 
-        
-        self.fileManegerButton=Button(master=self.desktop,text="FileManager",command=self.doFileManagerAction)
-        self.notepadButton=Button(master=self.desktop,text="Notepad",command=self.doNotepadAction)
-        self.paintButton=Button(master=self.desktop,text="Paint",command=self.doPaintAction)
-        self.internetButton=Button(master=self.desktop,text="Internet",command=self.doInternetAction)
 
+        self.drawWidgets()
         self.toolbar=None
-        self.fileManegerButton.place(x=50,y=50)
-        self.notepadButton.place(x=50,y=100)
-        self.paintButton.place(x=50,y=150)
-        self.internetButton.place(x=50,y=200)
 
     def doFileManagerAction(self):
         self.openApps.append(myFrameWindow(myFileManagerFrame(self.desktop, (600,400)),"FileManager",self.toolbar,""))
@@ -56,6 +40,20 @@ class myDesktopFrame(Frame):
 
     def addToolBar(self, toolbar):
         self.toolbar = toolbar
+
+    def drawWidgets(self):
+        label1 = Label( self.desktop, image = self.bgPhoto) 
+        label1.place(x = 0, y = 0) 
+
+        self.fileManegerButton=Button(master=self.desktop,text="FileManager",command=self.doFileManagerAction)
+        self.notepadButton=Button(master=self.desktop,text="Notepad",command=self.doNotepadAction)
+        self.paintButton=Button(master=self.desktop,text="Paint",command=self.doPaintAction)
+        self.internetButton=Button(master=self.desktop,text="Internet",command=self.doInternetAction)
+
+        self.fileManegerButton.place(x=50,y=50)
+        self.notepadButton.place(x=50,y=100)
+        self.paintButton.place(x=50,y=150)
+        self.internetButton.place(x=50,y=200)
         
 
 

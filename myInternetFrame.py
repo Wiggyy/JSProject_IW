@@ -19,8 +19,12 @@ class myInternetFrame(Frame):
 
         super().__init__(parent)
         self.parent=parent
+        self.drawWidgets()
 
 
+        
+    
+    def drawWidgets(self):
         font1 = font.Font(family="Arial", size=20, weight="bold")
         font2 = font.Font(family="Arial", size=12)
         font3 = font.Font(family="Arial", size=12, weight="bold")

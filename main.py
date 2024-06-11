@@ -7,14 +7,15 @@ from myToolBarFrame import myToolBarFrame
 
 win =Tk()
 win.attributes('-fullscreen', True)
+win.geometry("900x600")
+win.title("Desktop")
 
 openApps=[]
+
 desktop = myDesktopFrame(win,openApps)
 toolBar = myToolBarFrame(desktop)
 desktop.addToolBar(toolBar)
 
-#window2=myFrameWindow(myFileManagerFrame(desktop.desktop, (600,400)),"Example",toolBar,"")
 
-win.geometry("900x600")
-win.title("Desktop")
+
 win.mainloop()

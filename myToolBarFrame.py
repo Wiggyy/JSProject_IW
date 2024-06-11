@@ -23,17 +23,10 @@ class myToolBarFrame(Frame):
 
         self.parent=parent
 
-        self.barFrame = Frame(master=desktop.desktop,bg="grey",height=50)
-
-        self.exitButton = Button(master=self.barFrame,text="Exit",command=self.doExitButtonAction)
+        self.drawWidgets()
 
         self.unminimizeList = []
-        self.timeLabel = Label(master=self.barFrame,text=datetime.now(),bg="grey")
-
-        self.barFrame.pack(side='bottom', fill="x",expand=False)
         
-        self.exitButton.pack(side="left")
-        self.timeLabel.pack(side="right")
        
         self.updateTime()
 
@@ -53,5 +46,16 @@ class myToolBarFrame(Frame):
         current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.timeLabel.config(text=current_time)
         self.timeLabel.after(1000, self.updateTime)
+
+    def drawWidgets(self):
+        self.barFrame = Frame(master=self.parent.master,bg="grey",height=50)
+
+        self.exitButton = Button(master=self.barFrame,text="Exit",command=self.doExitButtonAction)
+        self.timeLabel = Label(master=self.barFrame,text=datetime.now(),bg="grey")
+
+        self.barFrame.pack(side='bottom', fill="x",expand=False)
+        
+        self.exitButton.pack(side="left")
+        self.timeLabel.pack(side="right")
 
         
