@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import font
+
+from myDinoGameFrame import myDinoGameFrame
 class myInternetFrame(Frame):
  
     def __init__(self,desktop,size):
@@ -25,6 +27,7 @@ class myInternetFrame(Frame):
         self.mainFrame = Frame(master=self,bg="White")
         
         self.gameFrame = Frame(master=self.mainFrame, bg="red",width=250,height=150)
+        self.dinoGame = myDinoGameFrame(self.gameFrame)
 
         self.urlFrame = Frame(master=self.mainFrame,background="Light grey",height=25)
         self.urlLabel = Label(master=self.urlFrame,text="URL: ",background="Light grey")
@@ -45,6 +48,7 @@ class myInternetFrame(Frame):
         self.urlBox.pack(side="left",padx=10)
         self.urlBox.pack_propagate(False)
         self.gameFrame.pack(side="top",padx=15)
+        self.dinoGame.pack(side="top",padx=15)
         self.mainLabel1.pack(pady=(20, 10))
         self.mainLabel2.pack(anchor="w", padx=80)
         self.mainLabel3.pack(anchor="w", padx=100)
