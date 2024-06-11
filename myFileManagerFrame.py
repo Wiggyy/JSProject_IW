@@ -5,14 +5,7 @@ from os.path import isdir, join, exists, abspath
 import shutil
 
 class myFileManagerFrame(Frame):
-    """
-    This is one of the "contents" for myFrameWindow
-    It consists of:
-    - location - textfield
-    - list of objects (folders/files)
-    - topbuttons
-    
-    """
+
     def __init__(self,desktop,size):
         x,y = size
         

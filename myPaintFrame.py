@@ -2,14 +2,7 @@ from tkinter import *
 from tkinter import colorchooser,ttk
 
 class myPaintFrame(Frame):
-    """
-    This is one of the "contents" for myFrameWindow
-    It consists of:
-    - canvas
-    - toolbox (frame with buttons)
-    - load,save,clear,rename buttons
-    
-    """
+
     def __init__(self,desktop,size):
         x,y = size
         

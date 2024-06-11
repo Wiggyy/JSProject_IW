@@ -2,16 +2,7 @@ from tkinter import *
 from datetime import datetime
 
 class myToolBarFrame(Frame):
-    """
-    This is one of the "contents" for myFrameWindow
-    It consists of:
-    - bar (frame)
-    - exit button
-    - date and time
-    - all open apps and their unminimize
-    
-    
-    """
+
     def __init__(self,desktop):
         
         

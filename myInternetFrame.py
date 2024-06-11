@@ -1,15 +1,7 @@
 from tkinter import *
 from tkinter import font
 class myInternetFrame(Frame):
-    """
-    This is one of the "contents" for myFrameWindow
-    It consists of:
-    - button frame 
-    - place to write in - scrollable
-    - buttons on top (Save,Rename,Clear,Format*)
-    
-    
-    """
+ 
     def __init__(self,desktop,size):
         x,y = size
         
